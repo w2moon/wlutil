@@ -40,9 +40,12 @@ function forEachFile(pathToFind,callback){
     internalForEachFile(pathToFind,function(file){
         files.push(file);
     });
-    for(var i=0;i<files.length;++i){
-        callback(files[i]);
+    if(callback){
+        for(var i=0;i<files.length;++i){
+            callback(files[i]);
+        }
     }
+    
     return files;
 }
 var ignoreFolder = [
@@ -71,11 +74,11 @@ function zipFiles(files,toFile,cb){
 
      for(var i=0;i<files.length;++i){
          var file = files[i];
-         if(needIgnore(file.path)){
+         if(needIgnore(file)){
              return;
          }
         
-       archive.file(file.path, { name: file.zipName });
+       archive.file(file, { name: file.zipName });
     }
 
     output.on("close",cb)
